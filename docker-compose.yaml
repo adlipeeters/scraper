@@ -23,9 +23,9 @@ services:
       - elastic_net
     environment:
       - ELASTICSEARCH_NODE=http://elasticsearch:9200
-      - ELASTICSEARCH_USERNAME=elastic # Adjust as needed
-      - ELASTICSEARCH_PASSWORD=password # Adjust as needed
-      - NODE_TLS_REJECT_UNAUTHORIZED=0 # For self-signed certificates
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=password
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
     command: npm run start:dev
 
 networks:
