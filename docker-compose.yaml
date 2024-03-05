@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.2
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - elastic_net
+  app:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - elasticsearch
+    networks:
+      - elastic_net
+    environment:
+      - ELASTICSEARCH_NODE=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=elastic # Adjust as needed
+      - ELASTICSEARCH_PASSWORD=password # Adjust as needed
+      - NODE_TLS_REJECT_UNAUTHORIZED=0 # For self-signed certificates
+    command: npm run start:dev
+
+networks:
+  elastic_net:
+    driver: bridge
