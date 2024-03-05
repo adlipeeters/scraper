@@ -1,0 +1,254 @@
+{
+	"info": {
+		"_postman_id": "f3e3e3e3-3e3e-3e3e-3e3e-3e3e3e3e3e3e",
+		"name": "Scraper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "18746111"
+	},
+	"item": [
+		{
+			"name": "Scrape individual website",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/scraping/scrape?url=https://website.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"scraping",
+						"scrape"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "https://website.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Scrape from csv",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "folder/sample-websites.csv"
+						},
+						{
+							"key": "aa",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/scraping/scrape-from-csv?website_limit=1000&batch_limit=5&timeout=120000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"scraping",
+						"scrape-from-csv"
+					],
+					"query": [
+						{
+							"key": "website_limit",
+							"value": "1000"
+						},
+						{
+							"key": "batch_limit",
+							"value": "5"
+						},
+						{
+							"key": "timeout",
+							"value": "120000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create companies index",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/elasticsearch/create-company-index"
+			},
+			"response": []
+		},
+		{
+			"name": "Add document",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/elasticsearch/companies"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all documents",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"document\": {\r\n    \"phoneNumbers\": [\"086423423\", \"123167234\"],\r\n    \"socialMediaLinks\": [\"facebook.com\", \"twitter.com\"],\r\n    \"addresses\": [\"address1\", \"address2\"],\r\n    \"companyName\": \"Schedule Summary - Greater Boston Zen Center\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/elasticsearch/companies/documents/all?limit=1000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"elasticsearch",
+						"companies",
+						"documents",
+						"all"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search document",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/elasticsearch/search/companies?companyName=&domain=website.com&addresses=230 Bays&socialMediaLinks&phoneNumbers=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"elasticsearch",
+						"search",
+						"companies"
+					],
+					"query": [
+						{
+							"key": "companyName",
+							"value": ""
+						},
+						{
+							"key": "domain",
+							"value": "website.com"
+						},
+						{
+							"key": "addresses",
+							"value": "230 Bays"
+						},
+						{
+							"key": "socialMediaLinks",
+							"value": null
+						},
+						{
+							"key": "phoneNumbers",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bulk insert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "folder/sample-websites-company-names.csv"
+						}
+					]
+				},
+				"url": "http://localhost:3000/elasticsearch/bulk-insert/csv-sample-company-data"
+			},
+			"response": []
+		},
+		{
+			"name": "Reset companies index",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/elasticsearch/resetdata/companies/all"
+			},
+			"response": []
+		}
+	]
+}
